@@ -3,7 +3,7 @@ from transformers import RagTokenizer, RagSequenceForGeneration
 
 MODEL_NAME = "facebook/rag-token-nq"
 
-class EnhancedRetriever:
+class Enhance:
     def __init__(self):
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         
@@ -30,7 +30,7 @@ class EnhancedRetriever:
         )[0]
 
     def main(self):
-        ask = input("Ask a question: ").strip().lower()
+        ask = input("Ask: ").strip().lower()
         if not ask:
             print("Please enter a valid question")
             return
@@ -38,8 +38,9 @@ class EnhancedRetriever:
             result = self.generate(ask) 
             print("Answer:", result)
         except Exception as e:
-            print("Error in generation: ", e)
+            print("Error: ", e)
 
 if __name__ == "__main__":
-    retriever = EnhancedRetriever()
+    retriever = Enhance()
     retriever.main()
+
