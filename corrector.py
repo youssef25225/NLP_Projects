@@ -1,7 +1,6 @@
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 from transformers import pipeline
 import torch
-
 class Corrector:
     def __init__(self):
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -15,14 +14,14 @@ class Corrector:
     def main(self):
         text = input("Enter your text: ").strip().lower()
         if not text:
-            print("Please enter a valid text")
-            return
+            print("Please enter a vald text")
         try:
             corrected_text = self.correct_grammar(text)
-            print("Original Text:\n", text)
-            print("\nCorrected Text:\n", corrected_text)
+            print("Original: ", text)
+            print("\nCorrecte: ", corrected_text)
         except Exception as e:
-            print("Error in correction: ", e)
+            print("Error", e)
 if __name__ == "__main__":
     corrector = Corrector()
     corrector.main()
+
