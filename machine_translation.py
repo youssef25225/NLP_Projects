@@ -24,7 +24,8 @@ if __name__ == "__main__":
         return
     try:
         result = translate_text(sample)
-        print("Original Text:\n", sample)
+        print("Text:\n", sample)
         print("\nTranslated Text:\n", result)
     except Exception as e:
-        print("Error in translation: ", e)
+        print("Error: ", e)
+
