@@ -18,8 +18,9 @@ class Summarizer:
             result = self.nlp(text)
             print(result)
         except Exception as e:
-            print("Error in summarization: ", e)
+            print("Error: ", e)
 
 if __name__ == "__main__":
     summarizer = Summarizer()
     summarizer.main()
+
