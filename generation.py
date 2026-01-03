@@ -30,9 +30,15 @@ class EnhancedRetriever:
         )[0]
 
     def main(self):
-        query = "What is the capital of France?"
-        result = self.generate(query)
-        print("Answer:", result)
+        ask = input("Ask a question: ").strip().lower()
+        if not ask:
+            print("Please enter a valid question")
+            return
+        try:
+            result = self.generate(ask) 
+            print("Answer:", result)
+        except Exception as e:
+            print("Error in generation: ", e)
 
 if __name__ == "__main__":
     retriever = EnhancedRetriever()
