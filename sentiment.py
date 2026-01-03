@@ -17,8 +17,9 @@ class SentimentAnalysis:
             result = self.nlp(text)
             print(result)
         except Exception as e:
-            print("Error in Sentiment Analysis: ", e)
+            print("Error: ", e)
 
 if __name__ == "__main__":
     sentiment = SentimentAnalysis()
     sentiment.main()
+
