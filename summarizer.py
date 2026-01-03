@@ -1,18 +1,25 @@
-from transformers import pipeline 
-summ = pipeline("summarization", model="facebook/bart-large-cnn")
-def summarize_text(text, max_length=130, min_length=30, do_sample=False):
-    try:
-        summary = summ(text, max_length=max_length, min_length=min_length, do_sample=do_sample)
-        return summary[0]['summary_text']
-    except Exception as e:
-        return f"Error in summarization: {str(e)}"
+from transformers import pipeline
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
+import torch 
+
+class Summarizer:
+    def __init__(self):
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.tokenizer = AutoTokenizer.from_pretrained("facebook/bart-large-cnn")
+        self.model = AutoModelForSeq2SeqLM.from_pretrained("facebook/bart-large-cnn").to(self.device)
+        self.nlp = pipeline("summarization", model=self.model, tokenizer=self.tokenizer)
+
+    def main(self):
+        text = input("Enter your text: ")
+        if not text or not text.strip():
+            print("Please enter a valid text")
+            return
+        try:
+            result = self.nlp(text)
+            print(result)
+        except Exception as e:
+            print("Error in summarization: ", e)
+
 if __name__ == "__main__":
-    text = (
-        "The quick brown fox jumps over the lazy dog. "
-        "This sentence contains every letter of the alphabet. "
-        "It's often used to test fonts and keyboard layouts. "
-        "In addition to its practical uses, it's also a fun example of a pangram."
-    )
-    summary = summarize_text(text)
-    print("Original Text:\n", text)
-    print("\nSummary:\n", summary)    
+    summarizer = Summarizer()
+    summarizer.main()
