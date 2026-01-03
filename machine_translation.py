@@ -1,17 +1,30 @@
 from transformers import pipeline
 
-model = "Helsinki-NLP/opus-mt-en-ar"
-pipeline = pipeline("translation", model=model)
+modelName = "Helsinki-NLP/opus-mt-en-ar"
+
+translator = pipeline(
+    task="translation",
+    model=modelName
+)
 
 def translate_text(text: str) -> str:
-    if not text.strip():
+    if not text or not text.strip():
         return "Please enter a valid text"
+
     try:
-        result = pipeline(text, max_length=256, truncation=True)
-        return result[0]["generated_text"]
+        result = translator(text, max_length=256, num_beams=5, do_sample=True)
+        return result[0]["translation_text"]
     except Exception as e:
-        return f"Error in translation: {str(e)}"
+        return f"Translation error: {e}"
 
 if __name__ == "__main__":
-    sample = "I have 3 books! And you?"
-    print(translate_text(sample))
+    sample = input("Enter your text: ").strip().lower()
+    if not sample:
+        print("Please enter a valid text")
+        return
+    try:
+        result = translate_text(sample)
+        print("Original Text:\n", sample)
+        print("\nTranslated Text:\n", result)
+    except Exception as e:
+        print("Error in translation: ", e)
